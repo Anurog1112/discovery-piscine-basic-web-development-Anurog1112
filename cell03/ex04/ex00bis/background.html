@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Click change Color (jQuery)</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script></script>
+    </head> 
+<body>
+    
+    <button id="btn-1">Click me!</button>
+
+    <script>
+        // $(document).ready(...) คือรอให้หน้าเว็บโหลดเสร็จก่อนค่อยทำงาน
+        $(document).ready(function(){
+            
+            // เมื่อคลิกปุ่ม #btn-1
+            $("#btn-1").click(function(){
+                
+                // สุ่มสี (Logic เดิม แต่เขียนแบบ JS ปกติผสมได้)
+                const characters = '0123456789ABCDEF';
+                let color = '#';
+                for (let i = 0; i < 6; i++) {
+                    color += characters[Math.floor(Math.random() * 16)];
+                }
+
+                // สั่งเปลี่ยนสี body ด้วยคำสั่ง .css()
+                $("body").css("background-color", color);
+                
+            });
+        });
+    </script>
+</body>
+</html>

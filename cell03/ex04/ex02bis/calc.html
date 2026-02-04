@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator jQuery</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <style>
+        /* ส่วนตกแต่ง CSS */
+        body {
+            display: flex;
+            justify-content: center;
+            padding-top: 50px;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .calc-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 10px; /* เว้นระยะห่างระหว่างช่อง */
+            align-items: center;
+        }
+        input[type="text"], select {
+            padding: 10px;
+            font-size: 1.2em;
+            width: 100px;
+            text-align: center;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            padding: 10px 20px;
+            font-size: 1.2em;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calc-container">
+        <input type="text" id="leftOp" placeholder="Left">
+
+        <select id="operator">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+            <option value="%">%</option>
+        </select>
+
+        <input type="text" id="rightOp" placeholder="Right">
+
+        <input type="submit" id="btnCalc" value="Try me!">
+    </div>
+
+    <script>
+        // เริ่มเขียน jQuery
+        $(document).ready(function() {
+            
+            // 1. ระบบกวนใจ: เตือนทุก 30 วินาที
+            setInterval(function() {
+                alert('Please, use me...');
+            }, 30000);
+
+            // 2. เมื่อคลิกปุ่ม (ใช้ .click แทน onclick)
+            $('#btnCalc').click(function() {
+                
+                // ดึงค่าจากช่องต่างๆ (ใช้ .val() แทน .value)
+                let leftStr = $('#leftOp').val();
+                let rightStr = $('#rightOp').val();
+                let op = $('#operator').val();
+
+                // 3. ตรวจสอบว่าเป็นจำนวนเต็มบวกเท่านั้น (ใช้ Regex เหมือนเดิม)
+                if (!/^\d+$/.test(leftStr) || !/^\d+$/.test(rightStr)) {
+                    alert('Error : (');
+                    return; // จบการทำงาน
+                }
+
+                // แปลงเป็นตัวเลข
+                let left = parseInt(leftStr);
+                let right = parseInt(rightStr);
+                let result = 0;
+
+                // 4. ตรวจสอบการหารด้วย 0
+                if ((op === '/' || op === '%') && right === 0) {
+                    let msg = "It's over 9000!";
+                    alert(msg);
+                    console.log(msg);
+                    return;
+                }
+
+                // 5. คำนวณ
+                if (op === '+') result = left + right;
+                else if (op === '-') result = left - right;
+                else if (op === '*') result = left * right;
+                else if (op === '/') result = left / right;
+                else if (op === '%') result = left % right;
+
+                // 6. แสดงผลลัพธ์
+                alert(result);
+                console.log(result);
+            });
+
+        });
+    </script>
+</body>
+</html>

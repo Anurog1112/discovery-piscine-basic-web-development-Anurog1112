@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>To Do List jQuery</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        #ft_list {
+            width: 300px;
+            background: white;
+            border: 1px solid #ccc;
+            padding: 10px;
+            min-height: 100px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .todo-item {
+            background-color: #e9ecef;
+            padding: 10px;
+            margin-bottom: 5px;
+            border-left: 5px solid #007bff;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .todo-item:hover {
+            background-color: #ffcccc;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>To Do List (jQuery)</h1>
+    
+    <button id="btnNew">New</button>
+
+    <div id="ft_list"></div>
+
+    <script>
+        // --- ส่วนจัดการ Cookie (ใช้ JS ปกติผสมได้ เพราะ jQuery ไม่มีจัดการ Cookie ในตัว) ---
+        function setCookie(name, value, days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (encodeURIComponent(value) || "") + expires + "; path=/";
+        }
+
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) 
+                    return decodeURIComponent(c.substring(nameEQ.length, c.length));
+            }
+            return null;
+        }
+
+        // --- เริ่มต้น jQuery ---
+        $(document).ready(function() {
+
+            // 1. ฟังก์ชันโหลดรายการจาก Cookie ตอนเปิดเว็บ
+            loadTodoList();
+
+            // 2. เมื่อกดปุ่ม New
+            $('#btnNew').click(function() {
+                let text = prompt("อยากทำอะไรจ๊ะ?");
+                if (text != null && text.trim() !== "") {
+                    addTodo(text);   // สร้างงาน
+                    saveTodoList();  // บันทึก
+                }
+            });
+
+            // 3. เมื่อคลิกที่งาน (เพื่อลบ)
+            // *** เทคนิคสำคัญ: Event Delegation ***
+            // เราใช้ .click ตรงๆ กับ .todo-item ไม่ได้ เพราะปุ่มมันเพิ่งเกิดทีหลัง
+            // ต้องสั่งผ่านพ่อ (#ft_list) ให้ไปจับตาดูลูก (.todo-item)
+            $('#ft_list').on('click', '.todo-item', function() {
+                if (confirm("ทำเสร็จแล้วหรอ? จะลบเลยนะ?")) {
+                    $(this).remove(); // ลบตัวเอง (jQuery ใช้ $(this))
+                    saveTodoList();   // บันทึกใหม่
+                }
+            });
+
+            // --- Helper Functions ---
+
+            // ฟังก์ชันสร้าง HTML และแปะหน้าเว็บ
+            function addTodo(text) {
+                // สร้าง div ด้วย jQuery
+                let $div = $('<div></div>').text(text).addClass('todo-item');
+                
+                // แปะไว้บนสุด
+                $('#ft_list').prepend($div);
+            }
+
+            // ฟังก์ชันบันทึกลง Cookie
+            function saveTodoList() {
+                let todos = [];
+                // ใช้ jQuery วนลูป div ทุกตัวในลิสต์
+                $('#ft_list .todo-item').each(function() {
+                    todos.push($(this).text());
+                });
+                
+                // แปลงเป็น JSON แล้วเก็บ
+                setCookie("todoListjQuery", JSON.stringify(todos), 7);
+            }
+
+            // ฟังก์ชันโหลดจาก Cookie
+            function loadTodoList() {
+                let cookie = getCookie("todoListjQuery");
+                if (cookie) {
+                    let todos = JSON.parse(cookie);
+                    // วนลูปสร้าง div (ต้องวนย้อนกลับ เพื่อให้ลำดับถูกต้องเมื่อใช้ prepend)
+                    for (let i = todos.length - 1; i >= 0; i--) {
+                        addTodo(todos[i]);
+                    }
+                }
+            }
+
+        });
+    </script>
+</body>
+</html>
