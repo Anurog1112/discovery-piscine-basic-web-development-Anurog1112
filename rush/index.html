@@ -3,9 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="style/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Rush Project - Team Showcase</title>
 </head>
 <body>
-    
+    <!-- Animated Background -->
+    <div class="bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="home-container">
+        <!-- Header -->
+        <header class="header fade-in">
+            <div class="logo">
+                <span class="logo-dot"></span>
+                <span class="logo-text">Rush Project</span>
+            </div>
+            <p class="subtitle">Discovery Piscine 2026</p>
+        </header>
+
+        <!-- Hero Content -->
+        <main class="hero-content">
+            <h1 class="main-title fade-in-up">
+                Meet Our <span class="gradient-text">Team</span>
+            </h1>
+            <p class="description fade-in-up">
+                Passionate developers crafting beautiful digital experiences.<br>
+                Explore our portfolios and discover our journey.
+            </p>
+
+            <!-- Profile Cards -->
+            <div class="cards-container fade-in-up">
+                <a href="resume_1.html" class="profile-card">
+                    <div class="card-bg"></div>
+                    <div class="card-content">
+                        <div class="avatar">
+                            <img src="assets/profile-1.jpg" alt="Adjima Sawain" class="avatar-img">
+                            <div class="avatar-status"></div>
+                        </div>
+                        <h3 class="card-name">Adjima Sawain</h3>
+                        <p class="card-role">Data Analyst & Designer</p>
+                        <div class="card-tags">
+                            <span class="tag">Statistics</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">Design</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="resume_2.html" class="profile-card">
+                    <div class="card-bg"></div>
+                    <div class="card-content">
+                        <div class="avatar">
+                            <img src="assets/profile-2.jpg" alt="Anurag Namgat" class="avatar-img">
+                            <div class="avatar-status"></div>
+                        </div>
+                        <h3 class="card-name">Anurag Namgat</h3>
+                        <p class="card-role">Full-stack Developer</p>
+                        <div class="card-tags">
+                            <span class="tag">Node.js</span>
+                            <span class="tag">NestJS</span>
+                            <span class="tag">TypeScript</span>
+                        </div>
+                        <div class="card-arrow">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer fade-in">
+            <p>Built with passion during 42 Bangkok Discovery Piscine</p>
+        </footer>
+    </div>
 </body>
 </html>
